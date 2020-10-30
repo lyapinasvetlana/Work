@@ -7,6 +7,29 @@ namespace Work
     {
         static void Main(string[] args)
         {
+            
+          
+        }
+        static void StaticExampleType()
+        {
+            string name = "abra"; //мы вызваем методы к тип
+            bool containsA = name.Contains('a'); //методы вызываем на экземпляре != статические
+            //определены внутри типа string/ name=экземпляр
+            Console.WriteLine(containsA); //метод WL на типе Console статический
+            string abc = string.Concat("a", "b", "c"); //статический
+            //этот метод вызывается на самом типе string, мы не вызываем его на экземпляре
+            //а возвращает он экземпляр типа string/ который записан в abc
+            Console.WriteLine(abc);
+            Console.WriteLine(int.MinValue);//также  статический вызывается на типе
+
+            int x = 1;
+            string xStr = x.ToString();
+            Console.WriteLine(xStr);
+            Console.WriteLine(x);
+
+        }
+        static void BoolOperator()
+        {
             int x = 1;
             int y = 2;
             bool areequal = x == y;
@@ -18,6 +41,8 @@ namespace Work
             result = x < y;
             Console.WriteLine(result);
             result = x <= y;
+            Console.WriteLine(result);
+            result = x != y;
             Console.WriteLine(result);
 
         }
