@@ -1,5 +1,7 @@
 ﻿using System;
 using System.Runtime.CompilerServices;
+using System.Text;
+
 
 namespace Work
 {
@@ -8,9 +10,130 @@ namespace Work
         static void Main(string[] args)
         {
             
-          
+
         }
-        static void StaticExampleType()
+        static void StringBuilder()
+        {
+            //работает быстрее при сложении более 7 строк
+            StringBuilder sb = new StringBuilder();
+            //чтобы наполнить строчками вызываем экземплярные методы
+            sb.Append("My "); //модифицирует строчку, не нужно возвращать
+            sb.Append("name ");
+            sb.Append("is ");
+            sb.Append("John");
+            //добавить+каретка на новую строку
+            sb.AppendLine("!");
+            sb.Append("Hello");
+            //превращаем в строку
+            string str = sb.ToString();
+            Console.WriteLine(str);
+        }
+        static void StringModification()
+        {
+            string nameConcat = string.Concat("My ", "name ", "is ", "John");
+            //Join позволяет указать разделитель, отличие от Concat
+            nameConcat = string.Join(" ", "My", "name", "is", "John");
+            //но Contact работает быстрее
+            nameConcat = "My " + "name " + "is " + "Jonh";
+            //индекс, с которого вставлена подстрока
+            string newName = nameConcat.Insert(0, "By the way, ");
+            //методы инстанции не изменяют её саму(значение неизменяемо)
+            //поэтому надо содать или новое, или презаписать
+            Console.WriteLine(nameConcat);
+            Console.WriteLine(newName);
+            //удаляет подстроку с (опреденного индекса, количество символов удаляем)
+            nameConcat = nameConcat.Remove(0, 1);
+            Console.WriteLine(nameConcat);
+            //заменяем один символ на другой
+            string replaced = nameConcat.Replace('n', 'z');
+            Console.WriteLine(replaced);
+
+            string data = "12;28;90;60";
+            //получим массив типа string, указываем разделитель
+            string[] splitData = data.Split(';');
+            //обращаемся по индексу
+            string first = splitData[0];
+            Console.WriteLine(first); //будет записано 12
+            //теперь возвращает массив char
+            char[] chars = nameConcat.ToCharArray();
+            Console.WriteLine(chars[0]);
+            Console.WriteLine(nameConcat[0]); //тот же вывод/можно напрямую
+            //преобразование регистров
+            string lower = nameConcat.ToLower();
+            Console.WriteLine(lower); //все маленькие
+
+            string upper = nameConcat.ToUpper();
+            Console.WriteLine(upper); //все большие
+            //обрезаем символы слева и справа ПРОБЕЛЫ
+            string jonh = " My name is John ";
+            Console.WriteLine(jonh.Trim());
+        }
+        static void NullEmptyWhiteSpaced()
+        {
+            string str = string.Empty; // same as ""
+
+            string empty = "";
+            string whiteSpaced = " ";
+            string notEmpty = "b";
+            string nullStr = null; //отсутствие экземпляра(в памяти)=ничего
+            //nullStr.Contains('a'); //будет ошибка
+            //как определить состояние
+            Console.WriteLine("IsNullorEmpty");
+            //null можно передавть внутри метода
+            bool IsNullorEmpty = string.IsNullOrEmpty(nullStr);
+            Console.WriteLine(IsNullorEmpty); //true
+
+            IsNullorEmpty = string.IsNullOrEmpty(whiteSpaced);
+            Console.WriteLine(IsNullorEmpty); //false
+
+            IsNullorEmpty = string.IsNullOrEmpty(notEmpty);
+            Console.WriteLine(IsNullorEmpty); //false
+
+            IsNullorEmpty = string.IsNullOrEmpty(empty);
+            Console.WriteLine(IsNullorEmpty); //true
+
+            Console.WriteLine("IsNullorWhiteSpaced"); //+whitespaced
+            bool IsNullorWhiteSpaced = string.IsNullOrWhiteSpace(nullStr);
+            Console.WriteLine(IsNullorWhiteSpaced); //true
+
+            IsNullorWhiteSpaced = string.IsNullOrWhiteSpace(whiteSpaced);
+            Console.WriteLine(IsNullorWhiteSpaced); //true
+
+            IsNullorWhiteSpaced = string.IsNullOrWhiteSpace(notEmpty);
+            Console.WriteLine(IsNullorWhiteSpaced); //false
+
+            IsNullorWhiteSpaced = string.IsNullOrWhiteSpace(empty);
+            Console.WriteLine(IsNullorWhiteSpaced); //true
+        }
+        static void QuaryingBasicStringAPI()
+        {
+            //API как работаем с типом, его методы, аргументы методов
+            //какие свойства, что возвращают== программный интерфейс
+            string name = "abracadabra";
+            bool containsA = name.Contains('a');
+            bool containsE = name.Contains('E');
+            Console.WriteLine(containsA);
+            Console.WriteLine(containsE);
+
+            bool endWithAbra = name.EndsWith("abra"); //2перегрузки с char and string 
+            Console.WriteLine(endWithAbra);
+            bool startsWithAbra = name.StartsWith("abra");
+            Console.WriteLine(startsWithAbra);
+            //найти индекс символа в строке
+            int indexOfA = name.IndexOf('a', 1); //перегрузка поиск с первого элемента
+            Console.WriteLine(indexOfA);
+            int lastIndexOfR = name.LastIndexOf('r');
+            Console.WriteLine(lastIndexOfR);
+
+            Console.WriteLine(name.Length);
+            //взятие подстроки (начиная с индекса до последнего)
+            string substr = name.Substring(5);
+            string substr2 = name.Substring(0, 3);
+            Console.WriteLine(substr);
+            Console.WriteLine(substr2);
+
+        }
+        static void StaticInstanceMembers()
         {
             string name = "abra"; //мы вызваем методы к тип
             bool containsA = name.Contains('a'); //методы вызываем на экземпляре != статические
