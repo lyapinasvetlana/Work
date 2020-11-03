@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Microsoft.Win32.SafeHandles;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
@@ -9,7 +10,133 @@ namespace С_ArraysCollection
     {
         static void Main(string[] args)
         {
-           
+
+            bool keys=false;
+            
+            
+            Console.WriteLine("Введите римское число");
+            string number = "";
+            int[] dobavka = { 0, 0, 0 };
+            number = Console.ReadLine();
+            var list = number.ToList();
+            var intList = new List<int>();
+            do { 
+            if (string.IsNullOrWhiteSpace(number))
+                {
+                    Console.WriteLine("Вы ничего не ввели. Введите римское число!");
+                    number = Console.ReadLine();
+                    list = number.ToList();
+                    intList.Clear();
+                    
+                }
+            for (int i = 0; i < list.Count; i++)
+            {
+                
+                switch (list[i])
+                {
+                    case 'I':
+                        {
+                            intList.Add(1);
+                            break;
+                        }
+                    case 'V':
+                        {
+                            intList.Add(5);
+                            break;
+                        }
+                    case 'X':
+                        {
+                            intList.Add(10);
+                            break;
+                        }
+
+                    case 'L':
+                        {
+                            intList.Add(50);
+                            break;
+                        }
+                    case 'C':
+                        {
+                            intList.Add(100);
+                            break;
+                        }
+                    case 'D':
+                        {
+                            intList.Add(500);
+                            break;
+                        }
+                    case 'M':
+                        {
+                            intList.Add(1000);
+                            break;
+                        }
+                    default:
+
+                        break;
+                }
+            }
+
+
+                List<int> proverka = new List<int>(intList);
+
+                proverka.AddRange(dobavka);
+
+            for (int i = 0; i < number.Length; i++)
+            {
+                    if (!(number[i] == 'I' || number[i] == 'V' || number[i] == 'X' || number[i] == 'L' || number[i] == 'C' || number[i] == 'D' || number[i] == 'M'))
+                    {
+                        Console.WriteLine("Используйте только символы: 'I','V','X','L','C','D','M'");
+                        number = Console.ReadLine();
+                        list = number.ToList();
+                        intList.Clear();
+                        proverka.Clear();
+                        keys = false;
+                        break;
+                    }
+                    else if ((proverka[i] == proverka[i + 1] && proverka[i] == proverka[i + 2] && proverka[i] < proverka[i + 3]) || (proverka[i] == proverka[i + 1] && proverka[i] < proverka[i + 2]) || (proverka[i]==proverka[i+1] && proverka[i] == proverka[i + 2] && proverka[i]==proverka[i+3] ))
+                    {
+                        Console.WriteLine("Такого сочетания не существует, используйте правильный порядок. Например: XCIX=99");
+                        Console.WriteLine("Не повторяйте один символ больше 3 раз подряд и меньший разряд может быть прописан только 1 раз перед большим");
+                        number = Console.ReadLine();
+                        
+                        list = number.ToList();
+                        intList.Clear();
+                        proverka.Clear();
+                        keys = false;
+                        break;
+                    }
+                    else
+                    {
+                    keys = true;
+                }
+
+            }
+            
+            }
+            while (keys==false);
+
+            if (number.Length % 2 != 0)
+            {
+                intList.Insert(number.Length, 0);
+            }
+            int plus = 0;
+            int minus = 0;
+            int sum = 0;
+            for (int i = 0; i < intList.Count; i+=2)
+            {
+                if (intList[i] < intList[i + 1])
+                {
+                    minus = intList[i + 1] - intList[i];
+                    sum = sum + minus; 
+                }
+
+                else
+                {
+                    plus = intList[i + 1] + intList[i];
+                    sum = sum + plus;
+                }
+            }
+            Console.WriteLine($"Переведенное число: {sum}");
         }
         static void IndexedArrays()
         {
