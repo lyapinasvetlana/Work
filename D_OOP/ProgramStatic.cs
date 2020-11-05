@@ -27,5 +27,25 @@ namespace D_OOP
             }
             return sum / numbers.Length;
         }
+
+        //опциональные параметры
+        //вместо новый перегрузки, можно создать модификацию
+        //то есть по умоланию bool isInRadians=false, если не передавать 4 агумент
+
+        public static double CalcTriangleSquare(double first, double second, int alpha, bool isInRadians=false)
+        {
+            if (isInRadians)
+            {
+                return 0.5 * first * second * Math.Sin(alpha); //использует радианы
+
+            }
+            else
+            {
+                double rads1 = alpha * Math.PI / 180;
+                return 0.5 * first * second * Math.Sin(rads1);  //использует радианы
+            }
+            
+        }
+
     }
 }
