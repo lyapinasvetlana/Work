@@ -1,4 +1,5 @@
-﻿using System;
+﻿using D_OOP;
+using System;
 using System.Data;
 using System.Reflection.Metadata;
 using System.Runtime.CompilerServices;
@@ -11,7 +12,9 @@ namespace Work
     {
         static void Main(string[] args)
         {
-           
+            Character c = new Character();
+            c.Hit(10);
+            Console.WriteLine(c.Health);
         }
         static void HM1()
         {

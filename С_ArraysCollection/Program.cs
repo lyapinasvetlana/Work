@@ -10,6 +10,7 @@ namespace С_ArraysCollection
     {
         static void Main(string[] args)
         {
+            //решение ДЗ. ЧИСЛА
 
             bool keys=false;
             
