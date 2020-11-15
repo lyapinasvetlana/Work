@@ -36,7 +36,21 @@ namespace D_OOP
         public int Y;
 
         public PointRef Pointref; //объявили поле типа Pointref
-        //структура содержит поле ссылочного типа
+                                  //структура содержит поле ссылочного типа
+
+        //использование READONLY через коснтруктор
+
+        public readonly PointRef PointRef2;
+        //пустой без аргументов конструктор в СТРУКТУРЕ быть не может
+        //+ проинициализировать все поля
+        public EvilSt(int x, int y)
+        {
+            X = x;
+            Y = y;
+            PointRef2 = new PointRef();
+            Pointref = new PointRef();
+
+        }
     }
 
 

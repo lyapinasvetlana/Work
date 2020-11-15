@@ -51,9 +51,115 @@ namespace D_OOP
 
 
         }
+
+
+
         static void Main(string[] args)
         {
+            //квадрат частный случай прямоугольник
+            //следовательно квадрат можно унаследовать от прямоугольника
+            Rect rect = new Rect {Height = 2, Width = 5};
+            int rectarea = AreaCalc.CalculateSquare(rect);
+            Console.WriteLine($"React area = {rectarea}");
 
+            //наследование 
+            //значит можно объявить базовым классом
+            //А проинициализировать наследником
+
+            //можем сделать разные стороны у квадрата :((
+            Rect square = new Squre {Height=2, Width =10};
+            AreaCalc.CalculateSquare(square);
+            //нерепрезантивное наследование
+            //реальность не соответсвует ООП
+            //лучше использовать интрефейс
+
+            IShape rect2 = new Rect2() { Height = 2, Width = 6 };
+            IShape square2 = new Squre2() { SideLength = 5 };
+            rect2.CalcSquare();
+            square2.CalcSquare();
+
+
+
+        }
+        static void IsAEvil()
+        {
+
+        }
+
+
+        static void ExtentionMethods()
+        {
+            List<object> list = new List<object>() { 1, 2, 3 };
+            IExtention collection = new BaseList2(4);
+
+            collection.AddRange(list);
+            collection.Add(1);
+
+        }
+        static void Interface()
+        {
+            //часто сравнивают с  контрактами
+            //унифицированная работа
+            ICollection collection = new BaseList(4);
+            collection.Add(1);
+
+
+        }
+        static void Polymorthism()
+        {
+            //ПОЛИМОРФИЗМ
+            //ИСПОЛЬЗУЕМ УНИФИЦИРОВАННЫЙ КОД ДЛЯ ВСЕХ НАСЛЕДНИКОВ
+            //В ПРИМЕРЕ ТРЕУГОЛЬНИК И ПРЯМОУГОЛЬНИК
+
+            //когда класс абстрактный нельзя
+            //создать экземпляр
+            //Shape shapes = new Shape();
+            //Но мы Можем объявить МАССИВ
+
+            Shape[] shapes = new Shape[2];
+
+            //shapes[0]
+            //reference type поэтому будет лежать null
+
+            shapes[0] = new Triangle(10, 5, 6); //Вывдет Shape Created мы модифицировали конструктор
+            //Сначала исполняется в базовом конструкторе, потом в наследнеке
+            //то есть мы работаем с наследниками используя базовый класс
+            shapes[1] = new Rectangle(5, 10); //Вывдет Shape Created, потому что мы модифицировали конструктор
+            foreach (Shape item in shapes)
+            {
+                item.Draw();
+                Console.WriteLine(item.Perimeter());
+            }
+            //унифицированно работаем со всеми наследниками, не создаём отдельные методы
+            static void Do(Shape shape)
+            {
+                shape.Draw();
+                shape.Area();
+                shape.Perimeter();
+            }
+        }
+        static void Nasledovanye_Konstruktor()
+        {
+            //НАСЛЕНДОВАНИЕ
+
+            BankTerminalX terminal = new BankTerminalX("123");
+            terminal.Connect();
+            Console.ReadLine();
+            //выведет две строчки (с override строчкой)
+
+
+            //КОНСТРУКТОР
+            //когда создаём экземпляр класса
+            //мы вызываем конструктор
+            Character exmple = new Character();
+
+            //нестандартый констуруктор с параметрами
+            //защита от создания экземпляра без указания расы
+            Character withrace = new Character("Russian");
+            Console.WriteLine(withrace.Race);
+        }
+        static void AboutObj()
+        {
             int x5 = 1;
             object obj = x5; //boxing
             //происходит процесс упаковки 
@@ -66,38 +172,37 @@ namespace D_OOP
             int y = (int)obj;
             //теперь y=обычный value type
             //Дженерики =int в List<int>, можно указать тип для списка
-            double pi=3.14;
+            double pi = 3.14;
             object obj1 = pi;
             int number = (int)(double)obj1; ///получим исключение, если нет(double)
             Console.WriteLine(obj1);
             //Проблемы, что никто не знает, какой тип лежит в object
-
-            
-
-
-
-
+        }
+        static void NullReference()
+        {
             ///ЭКЗМЕПЛЯРЫ ССЫЛОЧНЫХ ТИПОВ
             ///ССЫЛКИ НИКУДА НЕ УКАЗЫВАЮТ
             ///НУЛЕВАЯ ССЫЛКА
             ///
             //БУДЕТ ОШИБКА
             //PointRef c5=null;
+
             //Console.WriteLine(c5.X); //NullReferenceException
-                                     //ссылка не указывает на экземпляр 
-                                     //мы не выделили память, куда указывает ссылка
+            //ссылка не указывает на экземпляр 
+            //мы не выделили память, куда указывает ссылка
 
 
-            //ПОД структура сразу выделяется память
+            //ПОД структуру сразу выделяется память
 
             //PointVal pv=null;
             //Console.WriteLine(pv.X);
 
             //valuetype/ который присваивает null=?
-            PointVal? pv=null;
+            PointVal? pv = null; //добавлячется вопросительный знак,
+            //чтоюы в структуру можно было положить null
             if (pv.HasValue)
             {
-                PointVal pv2 = pv.Value;
+                PointVal pv2 = pv.Value; //если не будет значения, то также получим ошибку
                 Console.WriteLine(pv.Value.X);
                 Console.WriteLine(pv2.X);
             }
@@ -109,10 +214,9 @@ namespace D_OOP
             PointVal pv3 = pv.GetValueOrDefault();
             //если null, то состояние по умолчанию
             //X,Y=0
-
-
-
-
+        }
+        static void RefValueType_Evil()
+        {
             ////новое задание 
             List<int> list = new List<int>();
             //вызвали экземпляр листа 
@@ -142,7 +246,7 @@ namespace D_OOP
             Console.WriteLine($"Swaped a={a}, b={bb}");
             //функция принимает аргуметы по ссылке
 
-            ///НО ЧАЩЕ ВМЕСТО СТРУКТУР ИСПОЛЬЗУЕМ КЛАССФ
+            ///НО ЧАЩЕ ВМЕСТО СТРУКТУР ИСПОЛЬЗУЕМ КЛАСС
             ///ПОЭТОМУ НЕОБХОДИМОСТИ В ref НЕТ!
 
             Console.ReadLine();
@@ -165,8 +269,9 @@ namespace D_OOP
             Console.WriteLine($"st2.Pointref.X={st2.Pointref.X}, st1.Pointref.Y={st2.Pointref.Y}");
             //везде 40 и 45. работают как ссылки
 
-
-
+        }
+        static void DifferenceClassStructure()
+        {
             //РАЗНИЦА МЕЖДУ КЛАССОМ И СТРУКТУРОЙ В КОПИРОВАНИЕ
 
             //создаём экземпляр структуры
@@ -183,19 +288,20 @@ namespace D_OOP
             Console.WriteLine("After structs");
 
             //экземпляр класса
-            PointRef f = new PointRef(); 
-            f.X = 3; 
+            PointRef f = new PointRef();
+            f.X = 3;
             f.Y = 5;
 
-            PointRef  d = f;
+            PointRef d = f;
             d.X = 7; //после копирования обе переменные имеют одну ссылку
             d.Y = 10; // мы меняем значение и для f
             f.LogValues(); // 7 and 10
             d.LogValues();// 7 and 10
 
+        }
 
-
-
+        static void TryDo_Out_Svoystva()
+        {
             //переменная класса Character=c
             //создали экземляр типа Character
             Character c = new Character();
@@ -223,8 +329,8 @@ namespace D_OOP
             double square3 = calc.CalcTriangleSquare(10, 6, 7);
             Console.WriteLine($"Square1 = {square1}, Square2 = {square2}, Square3 = {square3}");
 
-            double average=calc.Average(new int[] {1,2,3,4});
-            double average2 = calc.Average2( 1, 2, 3, 4 );
+            double average = calc.Average(new int[] { 1, 2, 3, 4 });
+            double average2 = calc.Average2(1, 2, 3, 4);
 
             Console.WriteLine(average);
             Console.WriteLine(average2);
@@ -239,7 +345,7 @@ namespace D_OOP
             ///TryDo
             bool wasParsed = int.TryParse(Console.ReadLine(), out int result);
             if (wasParsed)
-            Console.WriteLine($"Полученное число = {result}");
+                Console.WriteLine($"Полученное число = {result}");
             //наш метод с OUT
             bool tryDivide = calc.TryDivide(20, 40, out double result2);
             if (tryDivide)
@@ -247,6 +353,9 @@ namespace D_OOP
                 Console.WriteLine($"Результат деления = {result2}");
             }
 
+        }
+        static void StaticExplain()
+        {
             //СТАТИК
             //Применимо к методам
             ProgramStatic.CalcTriangleSquare(first: 10, second: 5, third: 6);
@@ -280,8 +389,6 @@ namespace D_OOP
             //не можем присвоить динамичсекие вычесления(Методы)
             //уже подразумевает в радианах=false
             ProgramStatic.CalcTriangleSquare(2, 5, 30);
-
-
 
         }
         
