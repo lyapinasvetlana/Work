@@ -56,9 +56,69 @@ namespace D_OOP
 
         static void Main(string[] args)
         {
+           
+
+        }
+        static void MadeRightStack()
+        {
+            //теперь обязательно нужно указывать тип
+            MyStack2<int> ms = new MyStack2<int>();
+            ms.Push2(1);
+            ms.Push2(2);
+            ms.Push2(3);
+            while (ms.Count != 0)
+            {
+                Console.WriteLine(ms.Peek2());
+
+                ms.Pop2();
+            }
+        }
+        static void MadeWrongStack()
+        {
+            MyStack ms = new MyStack();
+            ms.Push(1);
+            ms.Push(2);
+            ms.Push(3);
+            //проблема, что сюда можно засунуть всё
+            ms.Push("abra");
+            ms.Push(false);
+            ms.Push(0.3);
+            ms.Push(new Character2(Race.Elf));
+
+            while(ms.Count != 0)
+            {
+                // Console.WriteLine((int)ms.Peek());
+                // но здесь не только int
+                ms.Pop();
+                //поэтому строгая типизация навязывает ограничения
+                //плюс
+            }
+
+            Console.WriteLine(ms.Peek());
+            ms.Pop();
+            Console.WriteLine(ms.Peek());
+            //происошло расширение стэка
+            ms.Push(3);
+            ms.Push(4);
+            ms.Push(5);
+            Console.WriteLine(ms.Peek());
+
+        }
+        static void Enums()
+        {
+            Character2 c = new Character2(Race.Elf);
+            //стало более защищенным, потому что нельзя передать люомй стринг
+            //ещё одно ПЕРЕЧЕСЛЕНИЕ(новая структура) 
+            //наряду с классами и структурами
+            //Но не имеют полей, свойств, методов и тд
+
+            //Позволяет задать несколько состояний
+        }
+        static void IsAEvil()
+        {
             //квадрат частный случай прямоугольник
             //следовательно квадрат можно унаследовать от прямоугольника
-            Rect rect = new Rect {Height = 2, Width = 5};
+            Rect rect = new Rect { Height = 2, Width = 5 };
             int rectarea = AreaCalc.CalculateSquare(rect);
             Console.WriteLine($"React area = {rectarea}");
 
@@ -67,7 +127,7 @@ namespace D_OOP
             //А проинициализировать наследником
 
             //можем сделать разные стороны у квадрата :((
-            Rect square = new Squre {Height=2, Width =10};
+            Rect square = new Squre { Height = 2, Width = 10 };
             AreaCalc.CalculateSquare(square);
             //нерепрезантивное наследование
             //реальность не соответсвует ООП
@@ -77,12 +137,6 @@ namespace D_OOP
             IShape square2 = new Squre2() { SideLength = 5 };
             rect2.CalcSquare();
             square2.CalcSquare();
-
-
-
-        }
-        static void IsAEvil()
-        {
 
         }
 
