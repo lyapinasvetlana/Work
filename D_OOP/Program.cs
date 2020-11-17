@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 
 namespace D_OOP
@@ -58,6 +59,45 @@ namespace D_OOP
         {
            
 
+        }
+        static void LasyIEnumerable()
+        {
+            //yield return
+        }
+        static void AddIEnumerable()
+        {
+            //проблемы нашего MyStack2
+            MyStack2<int> ms = new MyStack2<int>();
+            ms.Push2(1);
+            ms.Push2(2);
+            ms.Push2(3);
+            //выдаёт ошибку на foreach
+            //нужно создать интерфейс INumerable
+            //решение в MyStack
+            foreach (var item in ms)
+            {
+                Console.WriteLine(item);
+            }
+            //без этой переделки пришлось бы
+            var enumerat = ms.GetEnumerator();
+            while (enumerat.MoveNext())
+            {
+                Console.WriteLine(enumerat.Current);
+            }
+
+
+
+            //его спеацильно скрывают, но
+            //чтобы вызвать метод без T
+            //IEnumerable enumer = (IEnumerable)ms;
+
+
+            while (ms.Count != 0)
+            {
+                Console.WriteLine(ms.Peek2());
+
+                ms.Pop2();
+            }
         }
         static void MadeRightStack()
         {
@@ -194,6 +234,7 @@ namespace D_OOP
         }
         static void Nasledovanye_Konstruktor()
         {
+            //sealed class = запрет наследования от класса
             //НАСЛЕНДОВАНИЕ
 
             BankTerminalX terminal = new BankTerminalX("123");

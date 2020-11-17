@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Text;
 
@@ -68,7 +69,10 @@ namespace D_OOP
 
     //исправленная обобщенная версия
     //в dictionary <TKey, TValue>
-    public class MyStack2<T>
+
+    //вызываем для foreach IEnumerable
+    //ctrl +left click = info
+    public class MyStack2<T> : IEnumerable<T>
     {
         //делаем вид, что не знаем, что такое дженерики<>
         //используем тип object
@@ -84,6 +88,7 @@ namespace D_OOP
             }
         }
 
+        
         public MyStack2()
         {
             const int defaultCapacity = 4;
@@ -128,6 +133,75 @@ namespace D_OOP
             }
 
             return items[Count - 1];
+        }
+        //как реализовать легче
+        //public IEnumerator<T> GetEnumerator()
+        //{
+        //    return new StackEnumerator<T>(items, Count);
+        //}
+        //явная реализация интерфейса=метод от внешнего пользователя спрятан
+
+        public IEnumerator<T> GetEnumerator()
+        {
+            for(int i = Count-1; i>=0; i--)
+            {
+                //using yield return =  автоматизировали весь процесс создания
+                yield return items[i];
+                //если в ходе сделать break, то код так же генерит по одному элементу
+                //линивое вычисление == лишних зачений нет
+            }
+        }
+
+        IEnumerator IEnumerable.GetEnumerator()
+        {
+            return GetEnumerator();
+        }
+    }
+
+    public class StackEnumerator<T> : IEnumerator<T>
+    {
+        private readonly T[] array;
+        private readonly int count;
+        private int position;
+
+        public StackEnumerator(T[] array, int count)
+        {
+            this.array = array;
+            this.count = count;
+            position = count;
+        }
+        public T Current
+        {
+            get
+            {
+                return array[position];
+            }
+        }
+
+        object IEnumerator.Current
+        {
+            get
+            {
+                //возвращает результат Current
+                return Current;
+            }
+        }
+        //обычно для чистки памяти
+        public void Dispose()
+        {
+        }
+        //возвращает bool, если дальше есть элемент
+        //и сдвивает указатель
+        //идём с крекца в начало
+        public bool MoveNext()
+        {
+            position--;
+            return position >= 0;
+        }
+        //возвращает начальный элемент
+        public void Reset()
+        {
+            position = count;
         }
     }
 
